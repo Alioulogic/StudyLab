@@ -1,327 +1,100 @@
-/* styles.css */
-:root {
-    --bg-dark: #0a0a0c;
-    --text-light: #e0e0e0;
-    --accent: #00d2ff;
-    --accent-dark: #3a7bd5;
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Fiber Edu - Portal Educativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-    /* Grades Colors */
-    --grade-bad: rgba(255, 60, 60, 0.8);
-    --grade-mid: rgba(60, 200, 255, 0.8);
-    --grade-good: rgba(255, 215, 0, 0.9);
-}
+    <!-- Main Container -->
+    <div id="app">
+        <!-- Login View -->
+        <div id="login-view" class="view active">
+            <div class="glass-card login-card">
+                <h1 class="glow-text">Inicia Sesión</h1>
+                <p>EduPortal Premium</p>
+                <div class="form-group">
+                    <label for="username">Usuario (admin / alumno)</label>
+                    <input type="text" id="username" placeholder="Tu usuario">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña (admin / alumno)</label>
+                    <input type="password" id="password" placeholder="Tu contraseña">
+                </div>
+                <button id="login-btn" class="primary-btn">Acceder</button>
+            </div>
+        </div>
 
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+        <!-- Dashboard View -->
+        <div id="dashboard-view" class="view hidden">
+            <header class="glass-header">
+                <div class="logo">
+                    <h2>EduPortal <span class="accent">3D</span></h2>
+                </div>
+                <div class="user-info">
+                    <span id="current-user-name"></span>
+                    <button id="logout-btn" class="secondary-btn">Cerrar Sesión / Volver</button>
+                </div>
+            </header>
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--bg-dark);
-    /* Carbon Fiber Texture */
-    background-image: 
-        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px),
-        repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 2px, transparent 2px, transparent 4px),
-        repeating-linear-gradient(135deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 2px, transparent 2px, transparent 4px);
-    background-size: 20px 20px, 8px 8px, 8px 8px;
-    background-blend-mode: overlay;
-    color: var(--text-light);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
-}
+            <main class="dashboard-content">
+                <!-- Navigation Tabs -->
+                <nav class="tabs glass-tabs">
+                    <button class="tab-btn active" data-target="schedules-section">
+                        <img src="assets/schedule.png" alt="Horarios" class="tab-icon">
+                        Horarios
+                    </button>
+                    <button class="tab-btn" data-target="grades-section">
+                        <img src="assets/students.png" alt="Notas" class="tab-icon">
+                        Notas y Asistencias
+                    </button>
+                    <!-- Teachers only tab -->
+                    <button class="tab-btn hidden teacher-only" data-target="students-list-section">
+                        <img src="assets/teachers.png" alt="Gestión" class="tab-icon">
+                        Gestión de Alumnos
+                    </button>
+                </nav>
 
-#app {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-}
+                <!-- Sections -->
+                <!-- Schedules -->
+                <section id="schedules-section" class="tab-content active">
+                    <div class="glass-card full-width">
+                        <h3>Horarios de Clase</h3>
+                        <div id="schedule-container">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </section>
 
-.hidden {
-    display: none !important;
-}
+                <!-- Grades & Attendances (For students mostly, or view mode) -->
+                <section id="grades-section" class="tab-content hidden">
+                    <div class="glass-card full-width">
+                        <h3>Mis Notas y Asistencia</h3>
+                        <div id="my-grades-container" class="grades-grid">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </section>
 
-.view {
-    width: 100%;
-    animation: fadeIn 0.5s ease-out;
-}
+                <!-- Management (Teacher only) -->
+                <section id="students-list-section" class="tab-content hidden teacher-only">
+                    <div class="glass-card full-width">
+                        <h3>Gestión de Alumnado</h3>
+                        <div id="management-container">
+                            <!-- Dynamic Content -->
+                        </div>
+                    </div>
+                </section>
 
-/* Glassmorphism Classes */
-.glass-card {
-    background: rgba(20, 20, 25, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    border-radius: 16px;
-    padding: 2rem;
-}
+            </main>
+        </div>
+    </div>
 
-.glass-tabs {
-    background: rgba(20, 20, 25, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    padding: 10px;
-    margin-bottom: 2rem;
-}
-
-/* Utilities */
-.primary-btn, .secondary-btn, .tab-btn {
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.primary-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-    color: #fff;
-    width: 100%;
-    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
-}
-
-.primary-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
-}
-
-.secondary-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-light);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-.secondary-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.tab-btn {
-    background: transparent;
-    color: var(--text-light);
-}
-
-.tab-btn.active {
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.tab-btn:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Login Flow */
-.login-card {
-    max-width: 400px;
-    margin: 50px auto;
-    text-align: center;
-}
-
-.glow-text {
-    font-size: 2.5rem;
-    color: #fff;
-    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-dark);
-    margin-bottom: 10px;
-}
-
-.form-group {
-    margin: 20px 0;
-    text-align: left;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: #aaa;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    font-size: 1rem;
-}
-.form-group input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-/* Dashboard UI */
-.glass-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 15px;
-    background: rgba(20, 20, 25, 0.6);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 2rem;
-    border-radius: 12px;
-}
-.accent {
-    background: linear-gradient(to right, #00d2ff, #3a7bd5);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.tab-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 2px;
-}
-
-.tab-content {
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-.full-width {
-    width: 100%;
-}
-
-h3 {
-    margin-bottom: 1.5rem;
-    font-size: 1.5rem;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    padding-bottom: 10px;
-}
-
-/* Grid systems */
-.grades-grid, #management-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-}
-
-/* Animations for Grades */
-.grade-item {
-    padding: 20px;
-    border-radius: 12px;
-    background: rgba(30, 30, 35, 0.6);
-    border: 1px solid rgba(255,255,255,0.1);
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.grade-val {
-    font-size: 3rem;
-    font-weight: 800;
-    margin: 10px 0;
-}
-
-/* Bad Grade Animation */
-.anim-bad {
-    animation: shiver 0.5s infinite;
-    box-shadow: 0 0 15px var(--grade-bad);
-    border-color: var(--grade-bad);
-}
-.anim-bad .grade-val { color: #ff5e5e; text-shadow: 0 0 10px red; }
-
-/* Mid Grade Animation */
-.anim-mid {
-    animation: gentlePulse 2s infinite;
-    box-shadow: 0 0 15px var(--grade-mid);
-    border-color: var(--grade-mid);
-}
-.anim-mid .grade-val { color: #5ef1ff; text-shadow: 0 0 10px #00d2ff; }
-
-/* Good Grade Animation */
-.anim-good {
-    animation: floatGlow 3s infinite ease-in-out;
-    border-color: var(--grade-good);
-}
-.anim-good .grade-val { color: #ffd700; text-shadow: 0 0 15px gold; }
-
-
-@keyframes shiver {
-    0% { transform: translate(1px, 1px) rotate(0deg); }
-    20% { transform: translate(-1px, -2px) rotate(-1deg); }
-    40% { transform: translate(-3px, 0px) rotate(1deg); }
-    60% { transform: translate(3px, 2px) rotate(0deg); }
-    80% { transform: translate(1px, -1px) rotate(1deg); }
-    100% { transform: translate(1px, 1px) rotate(0deg); }
-}
-
-@keyframes gentlePulse {
-    0% { transform: scale(1); box-shadow: 0 0 10px rgba(60, 200, 255, 0.3); }
-    50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(60, 200, 255, 0.8); }
-    100% { transform: scale(1); box-shadow: 0 0 10px rgba(60, 200, 255, 0.3); }
-}
-
-@keyframes floatGlow {
-    0% { transform: translateY(0); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
-    50% { transform: translateY(-10px); box-shadow: 0 15px 25px rgba(255, 215, 0, 0.8); }
-    100% { transform: translateY(0); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Forms in Edit Mode */
-.edit-form input {
-    width: 60px;
-    padding: 5px;
-    margin: 5px;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid var(--accent);
-    color: white;
-    border-radius: 4px;
-}
-.edit-form button {
-    margin-top: 10px;
-}
-
-/* Schedule Table */
-.schedule-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-.schedule-table th, .schedule-table td {
-    padding: 15px;
-    text-align: left;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-.schedule-table th {
-    background: rgba(0,0,0,0.4);
-    color: var(--accent);
-}
-.schedule-table tr:hover {
-    background: rgba(255,255,255,0.05);
-}
-.student-card {
-    background: rgba(40, 40, 45, 0.6);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-.student-card h4 {
-    color: var(--accent);
-    margin-bottom: 10px;
-}
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
 
