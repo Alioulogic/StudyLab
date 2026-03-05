@@ -1,957 +1,327 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Antigravity School - Gestión</title>
-  <style>
-    :root{
-      --bg:#0b0f14;
-      --panel:#0f1620;
-      --panel2:#0c121a;
-      --txt:#e8eef7;
-      --muted:#a8b3c6;
-      --line:#203044;
-      --accent:#7dd3fc;
-      --ok:#34d399;
-      --warn:#fbbf24;
-      --bad:#fb7185;
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      background: radial-gradient(1200px 700px at 30% 10%, #132034 0%, var(--bg) 60%);
-      color:var(--txt);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue";
-    }
-    a{color:inherit}
-    .wrap{max-width:1100px; margin:0 auto; padding:22px}
-    header{
-      display:flex; align-items:center; justify-content:space-between; gap:14px;
-      padding:18px 18px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow: var(--shadow);
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-    }
-    .logo{
-      width:44px; height:44px; border-radius:14px;
-      background:
-        radial-gradient(12px 12px at 28% 30%, rgba(255,255,255,.18), transparent 60%),
-        linear-gradient(135deg, rgba(125,211,252,.25), rgba(52,211,153,.12)),
-        linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
-      border:1px solid rgba(125,211,252,.25);
-      box-shadow: 0 14px 30px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .logo:before{
-      content:"";
-      position:absolute; inset:-40%;
-      background: repeating-linear-gradient(45deg, rgba(255,255,255,.10) 0 8px, rgba(0,0,0,.0) 8px 16px);
-      transform: rotate(20deg);
-      opacity:.18;
-    }
-    h1{font-size:16px; margin:0}
-    .sub{font-size:12px; color:var(--muted); margin-top:2px}
-    .topRight{display:flex; gap:10px; align-items:center}
-    .pill{
-      font-size:12px; padding:8px 10px; border-radius:999px;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-    }
-    button{
-      cursor:pointer;
-      border:1px solid var(--line);
-      background: rgba(255,255,255,.04);
-      color: var(--txt);
-      padding:10px 12px;
-      border-radius:12px;
-      font-weight:600;
-    }
-    button:hover{border-color: rgba(125,211,252,.35)}
-    button.primary{
-      border-color: rgba(125,211,252,.35);
-      background: linear-gradient(180deg, rgba(125,211,252,.20), rgba(125,211,252,.08));
-    }
-    button.danger{
-      border-color: rgba(251,113,133,.35);
-      background: linear-gradient(180deg, rgba(251,113,133,.18), rgba(251,113,133,.08));
-    }
-    .grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:16px;
-    }
-    @media (max-width: 920px){
-      .grid{grid-template-columns: 1fr}
-    }
-
-    /* Carbon fiber 3D cards */
-    .card{
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:
-        radial-gradient(900px 300px at 30% 0%, rgba(125,211,252,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015)),
-        var(--panel);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-    }
-    .card .head{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 14px 10px 14px;
-      border-bottom:1px solid rgba(32,48,68,.7);
-      gap:10px;
-    }
-    .card h2{font-size:14px; margin:0}
-    .card .body{padding:14px}
-    .fiber:before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        /* carbon fiber weave */
-        repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 7px, rgba(0,0,0,0) 7px 14px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,.04) 0 7px, rgba(0,0,0,0) 7px 14px),
-        radial-gradient(600px 200px at 20% 0%, rgba(255,255,255,.06), transparent 60%);
-      opacity:.18;
-      pointer-events:none;
-      mix-blend-mode: screen;
-    }
-    .fiber:after{
-      content:"";
-      position:absolute; inset:-1px;
-      background: linear-gradient(120deg, rgba(255,255,255,.10), transparent 35%, rgba(255,255,255,.06));
-      opacity:.10;
-      transform: translateX(-60%);
-      animation: shine 6s ease-in-out infinite;
-      pointer-events:none;
-    }
-    @keyframes shine{
-      0%{transform: translateX(-60%)}
-      50%{transform: translateX(10%)}
-      100%{transform: translateX(-60%)}
-    }
-
-    .row{display:flex; gap:10px; flex-wrap:wrap}
-    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
-    input, select{
-      width:100%;
-      padding:10px 10px;
-      border-radius:12px;
-      border:1px solid var(--line);
-      background: rgba(0,0,0,.18);
-      color: var(--txt);
-      outline:none;
-    }
-    input::placeholder{color:#7a879e}
-    .field{flex:1; min-width:180px}
-    .mini{font-size:12px; color:var(--muted)}
-    .sep{height:10px}
-    .table{
-      width:100%;
-      border-collapse: collapse;
-      font-size:13px;
-      overflow:hidden;
-      border-radius:14px;
-      border:1px solid rgba(32,48,68,.7);
-    }
-    .table th, .table td{
-      padding:10px 10px;
-      border-bottom:1px solid rgba(32,48,68,.6);
-      text-align:left;
-      vertical-align: top;
-    }
-    .table th{color:var(--muted); font-weight:700; font-size:12px}
-    .table tr:last-child td{border-bottom:none}
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:12px; padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(32,48,68,.8);
-      background: rgba(255,255,255,.03);
-      color: var(--muted);
-    }
-    .dot{width:8px; height:8px; border-radius:50%}
-    .dot.ok{background: var(--ok)}
-    .dot.warn{background: var(--warn)}
-    .dot.bad{background: var(--bad)}
-    .hidden{display:none !important}
-
-    /* Avatar "3D" cards */
-    .avatar{
-      display:flex; gap:12px; align-items:center;
-      padding:12px;
-      border:1px solid rgba(32,48,68,.8);
-      border-radius:16px;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.0));
-    }
-    .avatar .pic{
-      width:56px; height:56px; border-radius:16px;
-      border:1px solid rgba(125,211,252,.22);
-      background:
-        radial-gradient(18px 18px at 32% 28%, rgba(255,255,255,.22), transparent 60%),
-        linear-gradient(135deg, rgba(125,211,252,.25), rgba(52,211,153,.10)),
-        radial-gradient(28px 18px at 60% 80%, rgba(0,0,0,.28), transparent 60%);
-      box-shadow: 0 14px 24px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .avatar .pic:before{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(14px 10px at 55% 42%, rgba(0,0,0,.35), transparent 60%),
-        radial-gradient(14px 10px at 42% 42%, rgba(0,0,0,.35), transparent 60%),
-        radial-gradient(18px 12px at 48% 62%, rgba(0,0,0,.35), transparent 70%);
-      opacity:.6;
-      filter: blur(.2px);
-    }
-    .avatar .name{font-weight:800; font-size:13px}
-    .avatar .role{font-size:12px; color:var(--muted)}
-
-    /* Grade animations */
-    .gradeBox{
-      position:relative;
-      border-radius:18px;
-      border:1px solid rgba(32,48,68,.8);
-      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.0));
-      padding:14px;
-      overflow:hidden;
-      min-height:120px;
-    }
-    .gradeValue{
-      font-size:36px;
-      font-weight:900;
-      letter-spacing: .5px;
-      line-height: 1;
-    }
-    .gradeText{margin-top:6px; color:var(--muted); font-size:13px}
-    .fxGlow{
-      position:absolute; inset:-80px;
-      background: radial-gradient(220px 180px at 30% 30%, rgba(52,211,153,.20), transparent 60%),
-                  radial-gradient(220px 180px at 70% 70%, rgba(125,211,252,.16), transparent 60%);
-      opacity:.0;
-      pointer-events:none;
-      transition: opacity .25s ease;
-    }
-
-    /* FX: Excellent */
-    .fx-excellent .fxGlow{opacity:1}
-    .fx-excellent .gradeValue{animation: pop 900ms ease-out infinite alternate}
-    @keyframes pop{
-      from{transform: translateY(0) scale(1)}
-      to{transform: translateY(-2px) scale(1.02)}
-    }
-    .spark{
-      position:absolute; width:6px; height:6px; border-radius:50%;
-      opacity:.0;
-      filter: blur(.2px);
-      animation: spark 1.2s ease-out infinite;
-      pointer-events:none;
-    }
-    @keyframes spark{
-      0%{transform: translate(0,0) scale(.6); opacity:0}
-      20%{opacity:.9}
-      100%{transform: translate(var(--dx), var(--dy)) scale(0); opacity:0}
-    }
-
-    /* FX: Medium */
-    .fx-medium .gradeValue{animation: floaty 1.6s ease-in-out infinite}
-    @keyframes floaty{
-      0%,100%{transform: translateY(0)}
-      50%{transform: translateY(-4px)}
-    }
-
-    /* FX: Low */
-    .fx-low{border-color: rgba(251,113,133,.45)}
-    .fx-low .gradeValue{animation: shake 280ms ease-in-out infinite}
-    @keyframes shake{
-      0%{transform: translateX(0)}
-      25%{transform: translateX(-2px)}
-      50%{transform: translateX(2px)}
-      75%{transform: translateX(-1px)}
-      100%{transform: translateX(0)}
-    }
-
-    .note{font-size:12px; color:var(--muted); margin-top:10px}
-    .actions{display:flex; gap:10px; flex-wrap:wrap}
-    .right{display:flex; justify-content:flex-end}
-    .toast{
-      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
-      padding:10px 12px; border-radius:999px;
-      border:1px solid rgba(32,48,68,.9);
-      background: rgba(10,14,20,.85);
-      color: var(--txt);
-      font-size:12px;
-      box-shadow: var(--shadow);
-      opacity:0; pointer-events:none;
-      transition: opacity .2s ease, transform .2s ease;
-    }
-    .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px)}
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1>Antigravity School</h1>
-          <div class="sub">Profesores, alumnos, horarios, asistencias y notas (demo sin servidor)</div>
-        </div>
-      </div>
-      <div class="topRight">
-        <div id="userPill" class="pill">No has iniciado sesión</div>
-        <button id="homeBtn" class="primary hidden">Volver a inicio</button>
-        <button id="logoutBtn" class="danger hidden">Cerrar sesión</button>
-      </div>
-    </header>
-
-    <!-- LOGIN -->
-    <div id="loginView" class="grid">
-      <div class="card fiber">
-        <div class="head">
-          <h2>Iniciar sesión</h2>
-          <span class="tag"><span class="dot warn"></span>Demo</span>
-        </div>
-        <div class="body">
-          <div class="row">
-            <div class="field">
-              <label>Usuario</label>
-              <input id="loginUser" placeholder="ej: prof1 o alu1" />
-              <div class="mini">Usuarios de prueba: <b>prof1</b>, <b>prof2</b>, <b>alu1</b>, <b>alu2</b></div>
-            </div>
-            <div class="field">
-              <label>Contraseña</label>
-              <input id="loginPass" type="password" placeholder="ej: 1234" />
-              <div class="mini">Contraseña de prueba: <b>1234</b></div>
-            </div>
-          </div>
-          <div class="sep"></div>
-          <div class="actions">
-            <button id="loginBtn" class="primary">Entrar</button>
-            <button id="resetBtn">Reset datos demo</button>
-          </div>
-          <div class="note">Esto usa <b>localStorage</b>. Si quieres multiusuario real, hace falta backend (Node/PHP/etc.).</div>
-        </div>
-      </div>
-
-      <div class="card fiber">
-        <div class="head">
-          <h2>“Imágenes” 3D fibra de carbono</h2>
-          <span class="tag"><span class="dot ok"></span>CSS</span>
-        </div>
-        <div class="body">
-          <div class="avatar">
-            <div class="pic"></div>
-            <div>
-              <div class="name">Profesor (render 3D estilo carbono)</div>
-              <div class="role">Puede editar horarios, asistencias y notas</div>
-            </div>
-          </div>
-          <div class="sep"></div>
-          <div class="avatar">
-            <div class="pic" style="border-color: rgba(52,211,153,.25)"></div>
-            <div>
-              <div class="name">Alumno (render 3D estilo carbono)</div>
-              <div class="role">Solo puede ver sus datos</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- APP -->
-    <div id="appView" class="grid hidden">
-      <!-- LEFT MAIN -->
-      <div class="card fiber">
-        <div class="head">
-          <h2 id="mainTitle">Panel</h2>
-          <span id="roleTag" class="tag"><span class="dot warn"></span>—</span>
-        </div>
-        <div class="body">
-          <!-- STUDENT SELECT (teacher only) -->
-          <div id="teacherControls" class="hidden">
-            <div class="row">
-              <div class="field">
-                <label>Selecciona alumno</label>
-                <select id="studentSelect"></select>
-              </div>
-              <div class="field">
-                <label>Acciones rápidas</label>
-                <div class="actions">
-                  <button id="addClassBtn" class="primary">+ Clase (Horario)</button>
-                  <button id="addAttendanceBtn">+ Asistencia</button>
-                  <button id="addGradeBtn">+ Nota</button>
-                </div>
-              </div>
-            </div>
-            <div class="sep"></div>
-          </div>
-
-          <!-- SCHEDULE -->
-          <h2 style="margin:0 0 10px 0; font-size:13px; color:var(--muted)">Horarios</h2>
-          <table class="table" id="scheduleTable">
-            <thead>
-              <tr>
-                <th>Día</th><th>Hora</th><th>Asignatura</th><th>Aula</th><th id="schActionsTh" class="hidden">Acciones</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-          <div class="sep"></div>
-
-          <!-- ATTENDANCE -->
-          <h2 style="margin:0 0 10px 0; font-size:13px; color:var(--muted)">Asistencias</h2>
-          <table class="table" id="attendanceTable">
-            <thead>
-              <tr>
-                <th>Fecha</th><th>Estado</th><th>Comentario</th><th id="attActionsTh" class="hidden">Acciones</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-          <div class="sep"></div>
-
-          <!-- GRADES -->
-          <h2 style="margin:0 0 10px 0; font-size:13px; color:var(--muted)">Notas</h2>
-          <table class="table" id="gradesTable">
-            <thead>
-              <tr>
-                <th>Asignatura</th><th>Nota</th><th>Fecha</th><th id="grdActionsTh" class="hidden">Acciones</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-
-        </div>
-      </div>
-
-      <!-- RIGHT SIDEBAR -->
-      <div class="card fiber">
-        <div class="head">
-          <h2>Media y animación</h2>
-          <span id="avgTag" class="tag"><span class="dot warn"></span>—</span>
-        </div>
-        <div class="body">
-          <div id="gradeBox" class="gradeBox">
-            <div class="fxGlow"></div>
-            <div class="gradeValue" id="avgValue">—</div>
-            <div class="gradeText" id="avgText">—</div>
-          </div>
-
-          <div class="note">
-            Reglas:
-            <ul style="margin:8px 0 0 18px; color:var(--muted); padding:0">
-              <li><b>&ge; 8.5</b> = animación “excelente” (brillo + chispas)</li>
-              <li><b>5.0 – 8.49</b> = animación “media” (flotante)</li>
-              <li><b>&lt; 5.0</b> = animación “baja” (temblor)</li>
-            </ul>
-          </div>
-
-          <div class="sep"></div>
-
-          <div class="avatar">
-            <div class="pic"></div>
-            <div>
-              <div class="name" id="whoName">—</div>
-              <div class="role" id="whoRole">—</div>
-            </div>
-          </div>
-
-          <div class="sep"></div>
-
-          <div class="right">
-            <button id="exportBtn">Exportar JSON</button>
-          </div>
-          <div class="note">Exporta los datos para guardarlos o pasarlos a un backend.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="toast" class="toast"></div>
-
-  <script>
-    // ---------- Demo DB (localStorage) ----------
-    const LS_KEY = "ag_school_db_v1";
-
-    const demoDB = () => ({
-      users: [
-        { id:"prof1", pass:"1234", role:"teacher", name:"Profe Vega" },
-        { id:"prof2", pass:"1234", role:"teacher", name:"Profe Luna" },
-        { id:"alu1",  pass:"1234", role:"student", name:"Alumno Alex" },
-        { id:"alu2",  pass:"1234", role:"student", name:"Alumna Nora" },
-      ],
-      students: [
-        { id:"alu1", name:"Alumno Alex" },
-        { id:"alu2", name:"Alumna Nora" }
-      ],
-      scheduleByStudent: {
-        alu1: [
-          { id: crypto.randomUUID(), day:"Lunes",   time:"08:30", subject:"Mates", room:"A1" },
-          { id: crypto.randomUUID(), day:"Miércoles", time:"10:30", subject:"Tecnología", room:"B2" },
-        ],
-        alu2: [
-          { id: crypto.randomUUID(), day:"Martes",  time:"09:30", subject:"Lengua", room:"A2" },
-          { id: crypto.randomUUID(), day:"Jueves",  time:"11:30", subject:"Robótica", room:"Lab" },
-        ],
-      },
-      attendanceByStudent: {
-        alu1: [
-          { id: crypto.randomUUID(), date:"2026-03-01", status:"Presente", note:"" },
-          { id: crypto.randomUUID(), date:"2026-03-03", status:"Tarde", note:"5 min" },
-        ],
-        alu2: [
-          { id: crypto.randomUUID(), date:"2026-03-02", status:"Presente", note:"" },
-          { id: crypto.randomUUID(), date:"2026-03-04", status:"Ausente", note:"Justificada" },
-        ],
-      },
-      gradesByStudent: {
-        alu1: [
-          { id: crypto.randomUUID(), subject:"Mates", grade:7.5, date:"2026-02-20" },
-          { id: crypto.randomUUID(), subject:"Tecnología", grade:9.0, date:"2026-02-28" },
-        ],
-        alu2: [
-          { id: crypto.randomUUID(), subject:"Lengua", grade:4.0, date:"2026-02-18" },
-          { id: crypto.randomUUID(), subject:"Robótica", grade:6.0, date:"2026-02-26" },
-        ],
-      }
-    });
-
-    function loadDB(){
-      const raw = localStorage.getItem(LS_KEY);
-      if(!raw){
-        const db = demoDB();
-        localStorage.setItem(LS_KEY, JSON.stringify(db));
-        return db;
-      }
-      try { return JSON.parse(raw); }
-      catch { const db = demoDB(); localStorage.setItem(LS_KEY, JSON.stringify(db)); return db; }
-    }
-    function saveDB(db){ localStorage.setItem(LS_KEY, JSON.stringify(db)); }
-
-    // ---------- State ----------
-    let db = loadDB();
-    let session = { user:null, selectedStudentId:null };
-
-    // ---------- UI refs ----------
-    const loginView = document.getElementById("loginView");
-    const appView = document.getElementById("appView");
-    const userPill = document.getElementById("userPill");
-    const homeBtn = document.getElementById("homeBtn");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    const loginUser = document.getElementById("loginUser");
-    const loginPass = document.getElementById("loginPass");
-    const loginBtn  = document.getElementById("loginBtn");
-    const resetBtn  = document.getElementById("resetBtn");
-
-    const mainTitle = document.getElementById("mainTitle");
-    const roleTag = document.getElementById("roleTag");
-    const teacherControls = document.getElementById("teacherControls");
-    const studentSelect = document.getElementById("studentSelect");
-
-    const scheduleTableBody = document.querySelector("#scheduleTable tbody");
-    const attendanceTableBody = document.querySelector("#attendanceTable tbody");
-    const gradesTableBody = document.querySelector("#gradesTable tbody");
-
-    const schActionsTh = document.getElementById("schActionsTh");
-    const attActionsTh = document.getElementById("attActionsTh");
-    const grdActionsTh = document.getElementById("grdActionsTh");
-
-    const addClassBtn = document.getElementById("addClassBtn");
-    const addAttendanceBtn = document.getElementById("addAttendanceBtn");
-    const addGradeBtn = document.getElementById("addGradeBtn");
-
-    const avgValue = document.getElementById("avgValue");
-    const avgText  = document.getElementById("avgText");
-    const gradeBox = document.getElementById("gradeBox");
-    const avgTag   = document.getElementById("avgTag");
-
-    const whoName = document.getElementById("whoName");
-    const whoRole = document.getElementById("whoRole");
-
-    const exportBtn = document.getElementById("exportBtn");
-    const toast = document.getElementById("toast");
-
-    // ---------- Helpers ----------
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add("show");
-      setTimeout(()=>toast.classList.remove("show"), 1500);
-    }
-    function requireSession(){
-      if(!session.user){ render(); return false; }
-      return true;
-    }
-    function isTeacher(){ return session.user?.role === "teacher"; }
-    function currentStudentId(){
-      if(isTeacher()) return session.selectedStudentId || db.students[0]?.id;
-      return session.user?.id;
-    }
-    function dotClassForAvg(avg){
-      if(avg >= 8.5) return "ok";
-      if(avg >= 5.0) return "warn";
-      return "bad";
-    }
-    function tagTextForAvg(avg){
-      if(avg >= 8.5) return "Excelente";
-      if(avg >= 5.0) return "Bien";
-      return "Mejorar";
-    }
-    function clearFx(){
-      gradeBox.classList.remove("fx-excellent","fx-medium","fx-low");
-      // remove sparks
-      gradeBox.querySelectorAll(".spark").forEach(n=>n.remove());
-    }
-    function setFx(avg){
-      clearFx();
-      if(!Number.isFinite(avg)){
-        avgValue.textContent = "—";
-        avgText.textContent = "No hay notas todavía";
-        avgTag.innerHTML = `<span class="dot warn"></span> Sin datos`;
-        return;
-      }
-      avgValue.textContent = avg.toFixed(2);
-      const label = tagTextForAvg(avg);
-      avgText.textContent = `Estado: ${label}`;
-      const dot = dotClassForAvg(avg);
-      avgTag.innerHTML = `<span class="dot ${dot}"></span> ${label}`;
-
-      if(avg >= 8.5){
-        gradeBox.classList.add("fx-excellent");
-        // create sparks
-        for(let i=0;i<10;i++){
-          const s = document.createElement("div");
-          s.className = "spark";
-          const x = 20 + Math.random()*60; // %
-          const y = 30 + Math.random()*40; // %
-          s.style.left = x + "%";
-          s.style.top  = y + "%";
-          const dx = (-60 + Math.random()*120) + "px";
-          const dy = (-80 - Math.random()*80) + "px";
-          s.style.setProperty("--dx", dx);
-          s.style.setProperty("--dy", dy);
-          s.style.background = "rgba(52,211,153,.95)";
-          s.style.animationDelay = (Math.random()*0.7) + "s";
-          gradeBox.appendChild(s);
-        }
-      } else if(avg >= 5.0){
-        gradeBox.classList.add("fx-medium");
-      } else {
-        gradeBox.classList.add("fx-low");
-      }
-    }
-
-    // ---------- CRUD ----------
-    function ensureBuckets(studentId){
-      db.scheduleByStudent[studentId] ||= [];
-      db.attendanceByStudent[studentId] ||= [];
-      db.gradesByStudent[studentId] ||= [];
-    }
-
-    function addSchedule(studentId){
-      const day = prompt("Día (ej: Lunes):", "Lunes");
-      if(!day) return;
-      const time = prompt("Hora (HH:MM):", "08:30");
-      if(!time) return;
-      const subject = prompt("Asignatura:", "Nueva");
-      if(!subject) return;
-      const room = prompt("Aula:", "A1");
-      if(room === null) return;
-
-      ensureBuckets(studentId);
-      db.scheduleByStudent[studentId].push({ id: crypto.randomUUID(), day, time, subject, room });
-      saveDB(db);
-      renderTables();
-      showToast("Horario añadido");
-    }
-
-    function addAttendance(studentId){
-      const date = prompt("Fecha (YYYY-MM-DD):", new Date().toISOString().slice(0,10));
-      if(!date) return;
-      const status = prompt("Estado (Presente / Ausente / Tarde):", "Presente");
-      if(!status) return;
-      const note = prompt("Comentario (opcional):", "") ?? "";
-      ensureBuckets(studentId);
-      db.attendanceByStudent[studentId].push({ id: crypto.randomUUID(), date, status, note });
-      saveDB(db);
-      renderTables();
-      showToast("Asistencia añadida");
-    }
-
-    function addGrade(studentId){
-      const subject = prompt("Asignatura:", "Nueva");
-      if(!subject) return;
-      const gradeStr = prompt("Nota (0-10):", "7.0");
-      if(gradeStr === null) return;
-      const grade = Number(gradeStr);
-      if(!Number.isFinite(grade) || grade < 0 || grade > 10){
-        alert("Nota inválida (0-10).");
-        return;
-      }
-      const date = prompt("Fecha (YYYY-MM-DD):", new Date().toISOString().slice(0,10));
-      if(!date) return;
-      ensureBuckets(studentId);
-      db.gradesByStudent[studentId].push({ id: crypto.randomUUID(), subject, grade, date });
-      saveDB(db);
-      renderTables();
-      showToast("Nota añadida");
-    }
-
-    function editItem(type, studentId, itemId){
-      ensureBuckets(studentId);
-      let arr;
-      if(type==="schedule") arr = db.scheduleByStudent[studentId];
-      if(type==="attendance") arr = db.attendanceByStudent[studentId];
-      if(type==="grades") arr = db.gradesByStudent[studentId];
-      const idx = arr.findIndex(x=>x.id===itemId);
-      if(idx<0) return;
-
-      const item = arr[idx];
-      if(type==="schedule"){
-        const day = prompt("Día:", item.day); if(!day) return;
-        const time = prompt("Hora:", item.time); if(!time) return;
-        const subject = prompt("Asignatura:", item.subject); if(!subject) return;
-        const room = prompt("Aula:", item.room); if(room===null) return;
-        arr[idx] = { ...item, day, time, subject, room };
-      }
-      if(type==="attendance"){
-        const date = prompt("Fecha:", item.date); if(!date) return;
-        const status = prompt("Estado:", item.status); if(!status) return;
-        const note = prompt("Comentario:", item.note ?? ""); if(note===null) return;
-        arr[idx] = { ...item, date, status, note };
-      }
-      if(type==="grades"){
-        const subject = prompt("Asignatura:", item.subject); if(!subject) return;
-        const gradeStr = prompt("Nota (0-10):", String(item.grade)); if(gradeStr===null) return;
-        const grade = Number(gradeStr);
-        if(!Number.isFinite(grade) || grade<0 || grade>10){ alert("Nota inválida."); return; }
-        const date = prompt("Fecha:", item.date); if(!date) return;
-        arr[idx] = { ...item, subject, grade, date };
-      }
-
-      saveDB(db);
-      renderTables();
-      showToast("Editado");
-    }
-
-    function deleteItem(type, studentId, itemId){
-      if(!confirm("¿Eliminar?")) return;
-      ensureBuckets(studentId);
-      let key = (type==="schedule") ? "scheduleByStudent" :
-                (type==="attendance") ? "attendanceByStudent" : "gradesByStudent";
-      db[key][studentId] = db[key][studentId].filter(x=>x.id!==itemId);
-      saveDB(db);
-      renderTables();
-      showToast("Eliminado");
-    }
-
-    // ---------- Render ----------
-    function render(){
-      const logged = !!session.user;
-      loginView.classList.toggle("hidden", logged);
-      appView.classList.toggle("hidden", !logged);
-      homeBtn.classList.toggle("hidden", !logged);
-      logoutBtn.classList.toggle("hidden", !logged);
-
-      if(!logged){
-        userPill.textContent = "No has iniciado sesión";
-        return;
-      }
-
-      userPill.textContent = `${session.user.name} (${session.user.role === "teacher" ? "Profesor" : "Alumno"})`;
-
-      if(isTeacher()){
-        mainTitle.textContent = "Panel del Profesor";
-        roleTag.innerHTML = `<span class="dot ok"></span> Profesor (puede editar)`;
-        teacherControls.classList.remove("hidden");
-        schActionsTh.classList.remove("hidden");
-        attActionsTh.classList.remove("hidden");
-        grdActionsTh.classList.remove("hidden");
-        populateStudentSelect();
-      } else {
-        mainTitle.textContent = "Panel del Alumno";
-        roleTag.innerHTML = `<span class="dot warn"></span> Alumno (solo lectura)`;
-        teacherControls.classList.add("hidden");
-        schActionsTh.classList.add("hidden");
-        attActionsTh.classList.add("hidden");
-        grdActionsTh.classList.add("hidden");
-      }
-
-      const sid = currentStudentId();
-      const studentName = db.students.find(s=>s.id===sid)?.name || session.user.name;
-      whoName.textContent = studentName;
-      whoRole.textContent = isTeacher() ? "Vista del alumno seleccionado" : "Tu perfil de alumno";
-
-      renderTables();
-    }
-
-    function populateStudentSelect(){
-      studentSelect.innerHTML = "";
-      db.students.forEach(s=>{
-        const opt = document.createElement("option");
-        opt.value = s.id;
-        opt.textContent = s.name + " ("+s.id+")";
-        studentSelect.appendChild(opt);
-      });
-      const defaultId = session.selectedStudentId || db.students[0]?.id;
-      session.selectedStudentId = defaultId;
-      studentSelect.value = defaultId;
-    }
-
-    function renderTables(){
-      const sid = currentStudentId();
-      if(!sid) return;
-      ensureBuckets(sid);
-
-      // schedule
-      scheduleTableBody.innerHTML = "";
-      db.scheduleByStudent[sid].forEach(row=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(row.day)}</td>
-          <td>${escapeHtml(row.time)}</td>
-          <td>${escapeHtml(row.subject)}</td>
-          <td>${escapeHtml(row.room)}</td>
-          ${isTeacher()? `<td>
-            <button onclick="window.__edit('schedule','${sid}','${row.id}')">Editar</button>
-            <button class="danger" onclick="window.__del('schedule','${sid}','${row.id}')">Eliminar</button>
-          </td>` : ``}
-        `;
-        scheduleTableBody.appendChild(tr);
-      });
-
-      // attendance
-      attendanceTableBody.innerHTML = "";
-      db.attendanceByStudent[sid].forEach(row=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(row.date)}</td>
-          <td>${escapeHtml(row.status)}</td>
-          <td>${escapeHtml(row.note || "")}</td>
-          ${isTeacher()? `<td>
-            <button onclick="window.__edit('attendance','${sid}','${row.id}')">Editar</button>
-            <button class="danger" onclick="window.__del('attendance','${sid}','${row.id}')">Eliminar</button>
-          </td>` : ``}
-        `;
-        attendanceTableBody.appendChild(tr);
-      });
-
-      // grades
-      gradesTableBody.innerHTML = "";
-      db.gradesByStudent[sid].forEach(row=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${escapeHtml(row.subject)}</td>
-          <td><b>${Number(row.grade).toFixed(1)}</b></td>
-          <td>${escapeHtml(row.date)}</td>
-          ${isTeacher()? `<td>
-            <button onclick="window.__edit('grades','${sid}','${row.id}')">Editar</button>
-            <button class="danger" onclick="window.__del('grades','${sid}','${row.id}')">Eliminar</button>
-          </td>` : ``}
-        `;
-        gradesTableBody.appendChild(tr);
-      });
-
-      // average + fx
-      const grades = db.gradesByStudent[sid].map(g=>Number(g.grade)).filter(n=>Number.isFinite(n));
-      const avg = grades.length ? grades.reduce((a,b)=>a+b,0)/grades.length : NaN;
-      setFx(avg);
-    }
-
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-
-    // Expose for inline buttons
-    window.__edit = (t,sid,id)=>editItem(t,sid,id);
-    window.__del  = (t,sid,id)=>deleteItem(t,sid,id);
-
-    // ---------- Events ----------
-    loginBtn.addEventListener("click", ()=>{
-      const u = loginUser.value.trim();
-      const p = loginPass.value;
-      const user = db.users.find(x=>x.id===u && x.pass===p);
-      if(!user){ alert("Usuario o contraseña incorrectos."); return; }
-      session.user = { id:user.id, role:user.role, name:user.name };
-      if(user.role==="teacher"){
-        session.selectedStudentId = db.students[0]?.id || null;
-      } else {
-        session.selectedStudentId = null;
-      }
-      render();
-      showToast("Sesión iniciada");
-    });
-
-    resetBtn.addEventListener("click", ()=>{
-      if(!confirm("¿Resetear datos demo?")) return;
-      db = demoDB();
-      saveDB(db);
-      session = { user:null, selectedStudentId:null };
-      render();
-      showToast("Datos reseteados");
-    });
-
-    logoutBtn.addEventListener("click", ()=>{
-      session = { user:null, selectedStudentId:null };
-      render();
-      showToast("Sesión cerrada");
-    });
-
-    homeBtn.addEventListener("click", ()=>{
-      // "Inicio" = panel principal de tu rol
-      if(!requireSession()) return;
-      showToast("Inicio");
-    });
-
-    studentSelect.addEventListener("change", ()=>{
-      session.selectedStudentId = studentSelect.value;
-      renderTables();
-    });
-
-    addClassBtn.addEventListener("click", ()=>{
-      if(!requireSession() || !isTeacher()) return;
-      addSchedule(currentStudentId());
-    });
-    addAttendanceBtn.addEventListener("click", ()=>{
-      if(!requireSession() || !isTeacher()) return;
-      addAttendance(currentStudentId());
-    });
-    addGradeBtn.addEventListener("click", ()=>{
-      if(!requireSession() || !isTeacher()) return;
-      addGrade(currentStudentId());
-    });
-
-    exportBtn.addEventListener("click", ()=>{
-      const data = JSON.stringify(db, null, 2);
-      const blob = new Blob([data], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "antigravity_school_db.json";
-      a.click();
-      URL.revokeObjectURL(url);
-      showToast("Exportado");
-    });
-
-    // Initial render
-    render();
-  </script>
-</body>
-</html>
+/* styles.css */
+:root {
+    --bg-dark: #0a0a0c;
+    --text-light: #e0e0e0;
+    --accent: #00d2ff;
+    --accent-dark: #3a7bd5;
+
+    /* Grades Colors */
+    --grade-bad: rgba(255, 60, 60, 0.8);
+    --grade-mid: rgba(60, 200, 255, 0.8);
+    --grade-good: rgba(255, 215, 0, 0.9);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    /* Carbon Fiber Texture */
+    background-image: 
+        radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px),
+        repeating-linear-gradient(45deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 2px, transparent 2px, transparent 4px),
+        repeating-linear-gradient(135deg, rgba(0,0,0,0.4) 0, rgba(0,0,0,0.4) 2px, transparent 2px, transparent 4px);
+    background-size: 20px 20px, 8px 8px, 8px 8px;
+    background-blend-mode: overlay;
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+#app {
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.view {
+    width: 100%;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Glassmorphism Classes */
+.glass-card {
+    background: rgba(20, 20, 25, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    border-radius: 16px;
+    padding: 2rem;
+}
+
+.glass-tabs {
+    background: rgba(20, 20, 25, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+    margin-bottom: 2rem;
+}
+
+/* Utilities */
+.primary-btn, .secondary-btn, .tab-btn {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tab-btn {
+    background: transparent;
+    color: var(--text-light);
+}
+
+.tab-btn.active {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.tab-btn:hover:not(.active) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Login Flow */
+.login-card {
+    max-width: 400px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.glow-text {
+    font-size: 2.5rem;
+    color: #fff;
+    text-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent-dark);
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
+    font-size: 1rem;
+}
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+/* Dashboard UI */
+.glass-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 15px;
+    background: rgba(20, 20, 25, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    border-radius: 12px;
+}
+.accent {
+    background: linear-gradient(to right, #00d2ff, #3a7bd5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.tab-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 2px;
+}
+
+.tab-content {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.full-width {
+    width: 100%;
+}
+
+h3 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 10px;
+}
+
+/* Grid systems */
+.grades-grid, #management-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* Animations for Grades */
+.grade-item {
+    padding: 20px;
+    border-radius: 12px;
+    background: rgba(30, 30, 35, 0.6);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.grade-val {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 10px 0;
+}
+
+/* Bad Grade Animation */
+.anim-bad {
+    animation: shiver 0.5s infinite;
+    box-shadow: 0 0 15px var(--grade-bad);
+    border-color: var(--grade-bad);
+}
+.anim-bad .grade-val { color: #ff5e5e; text-shadow: 0 0 10px red; }
+
+/* Mid Grade Animation */
+.anim-mid {
+    animation: gentlePulse 2s infinite;
+    box-shadow: 0 0 15px var(--grade-mid);
+    border-color: var(--grade-mid);
+}
+.anim-mid .grade-val { color: #5ef1ff; text-shadow: 0 0 10px #00d2ff; }
+
+/* Good Grade Animation */
+.anim-good {
+    animation: floatGlow 3s infinite ease-in-out;
+    border-color: var(--grade-good);
+}
+.anim-good .grade-val { color: #ffd700; text-shadow: 0 0 15px gold; }
+
+
+@keyframes shiver {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    20% { transform: translate(-1px, -2px) rotate(-1deg); }
+    40% { transform: translate(-3px, 0px) rotate(1deg); }
+    60% { transform: translate(3px, 2px) rotate(0deg); }
+    80% { transform: translate(1px, -1px) rotate(1deg); }
+    100% { transform: translate(1px, 1px) rotate(0deg); }
+}
+
+@keyframes gentlePulse {
+    0% { transform: scale(1); box-shadow: 0 0 10px rgba(60, 200, 255, 0.3); }
+    50% { transform: scale(1.02); box-shadow: 0 0 20px rgba(60, 200, 255, 0.8); }
+    100% { transform: scale(1); box-shadow: 0 0 10px rgba(60, 200, 255, 0.3); }
+}
+
+@keyframes floatGlow {
+    0% { transform: translateY(0); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
+    50% { transform: translateY(-10px); box-shadow: 0 15px 25px rgba(255, 215, 0, 0.8); }
+    100% { transform: translateY(0); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Forms in Edit Mode */
+.edit-form input {
+    width: 60px;
+    padding: 5px;
+    margin: 5px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid var(--accent);
+    color: white;
+    border-radius: 4px;
+}
+.edit-form button {
+    margin-top: 10px;
+}
+
+/* Schedule Table */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.schedule-table th, .schedule-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.schedule-table th {
+    background: rgba(0,0,0,0.4);
+    color: var(--accent);
+}
+.schedule-table tr:hover {
+    background: rgba(255,255,255,0.05);
+}
+.student-card {
+    background: rgba(40, 40, 45, 0.6);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+.student-card h4 {
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
