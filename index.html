@@ -2,8 +2,8 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Antigravity School - Premium Portal</title>
     <style>
         :root {
@@ -22,7 +22,6 @@
             --carbon-hl: #222;
         }
 
-        /* Carbon Fiber Pattern */
         body {
             margin: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -160,6 +159,17 @@
             box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
         }
 
+        button.ghost {
+            background: transparent;
+            border-color: rgba(197, 198, 199, 0.25);
+            color: var(--text-main);
+        }
+
+        button.ghost:hover {
+            border-color: rgba(102, 252, 241, 0.35);
+            color: #fff;
+        }
+
         /* Forms */
         .form-group {
             margin-bottom: 1.5rem;
@@ -252,6 +262,7 @@
             font-size: 2.5rem;
             font-weight: bold;
             position: relative;
+            overflow: hidden;
         }
 
         .grade-val {
@@ -295,91 +306,37 @@
         }
 
         @keyframes excellentGlow {
-            0% {
-                box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
-            }
-
-            100% {
-                box-shadow: 0 0 30px rgba(102, 252, 241, 0.9), inset 0 0 15px rgba(102, 252, 241, 0.5);
-            }
+            0% { box-shadow: 0 0 10px rgba(102, 252, 241, 0.5); }
+            100% { box-shadow: 0 0 30px rgba(102, 252, 241, 0.9), inset 0 0 15px rgba(102, 252, 241, 0.5); }
         }
 
         @keyframes excellentPop {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            90% {
-                transform: scale(1);
-            }
-
-            95% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            90% { transform: scale(1); }
+            95% { transform: scale(1.05); }
         }
 
         @keyframes particles {
-            0% {
-                transform: rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: rotate(360deg) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: rotate(0deg) scale(0.8); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: rotate(360deg) scale(1.2); opacity: 0; }
         }
 
         @keyframes floatSoft {
-
-            0%,
-            100% {
-                transform: translateY(0);
-                box-shadow: 0 10px 15px rgba(255, 193, 7, 0.2);
-            }
-
-            50% {
-                transform: translateY(-10px);
-                box-shadow: 0 20px 25px rgba(255, 193, 7, 0.4);
-            }
+            0%, 100% { transform: translateY(0); box-shadow: 0 10px 15px rgba(255, 193, 7, 0.2); }
+            50% { transform: translateY(-10px); box-shadow: 0 20px 25px rgba(255, 193, 7, 0.4); }
         }
 
         @keyframes trembleRed {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-                box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
-            }
-
-            20% {
-                transform: translate(-1px, 1px) rotate(-1deg);
-            }
-
-            40% {
-                transform: translate(-1px, -1px) rotate(1deg);
-            }
-
-            60% {
-                transform: translate(1px, 1px) rotate(0deg);
-            }
-
-            80% {
-                transform: translate(1px, -1px) rotate(1deg);
-            }
-
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-                box-shadow: 0 0 20px rgba(255, 75, 75, 0.8);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); box-shadow: 0 0 10px rgba(255, 75, 75, 0.5); }
+            20% { transform: translate(-1px, 1px) rotate(-1deg); }
+            40% { transform: translate(-1px, -1px) rotate(1deg); }
+            60% { transform: translate(1px, 1px) rotate(0deg); }
+            80% { transform: translate(1px, -1px) rotate(1deg); }
+            100% { transform: translate(0, 0) rotate(0deg); box-shadow: 0 0 20px rgba(255, 75, 75, 0.8); }
         }
 
         @media (prefers-reduced-motion: reduce) {
-
             .anim-excellent,
             .anim-medium,
             .anim-low,
@@ -391,43 +348,176 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Layout Grids */
         .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
         }
 
         /* Login specifically */
         #login-view .carbon-card {
-            max-width: 400px;
+            max-width: 460px;
             margin: 10vh auto;
             text-align: center;
         }
 
-        .avatar-3d {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
-            background: linear-gradient(135deg, var(--surface), #000);
-            border: 2px solid rgba(102, 252, 241, 0.3);
-            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.2), 0 5px 15px rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
+        /* ---- Modern “images” (SVG) ---- */
+        .iconBox {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(31, 40, 51, 0.95), rgba(0, 0, 0, 0.7));
+            border: 1px solid rgba(102, 252, 241, 0.25);
+            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.12), 0 10px 24px rgba(0, 0, 0, 0.75);
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .iconBox::before {
+            content: "";
+            position: absolute;
+            inset: -40%;
+            background: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.12) 0 8px, transparent 8px 16px);
+            transform: rotate(20deg);
+            opacity: 0.12;
+        }
+
+        .iconSvg {
+            width: 30px;
+            height: 30px;
+            z-index: 1;
+            filter: drop-shadow(0 0 10px rgba(102, 252, 241, 0.15));
+        }
+
+        .role-badge {
+            display: inline-flex;
             align-items: center;
-            font-size: 1.5rem;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(102, 252, 241, 0.22);
+            background: rgba(0, 0, 0, 0.35);
+            color: var(--text-main);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 10px rgba(102, 252, 241, 0.35);
+        }
+
+        .dot.teacher { background: var(--primary); }
+        .dot.student { background: var(--warning); }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .userChip {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(197, 198, 199, 0.18);
+            background: rgba(0, 0, 0, 0.30);
+        }
+
+        .userName {
+            font-weight: 800;
             color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.1;
+        }
+
+        .userRole {
+            font-size: 11px;
+            color: var(--text-main);
+            opacity: 0.9;
+            margin-top: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* teacher student cards */
+        .studentCard {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            padding: 18px;
+        }
+
+        .studentMeta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .muted {
+            color: var(--text-main);
+            opacity: 0.85;
+            font-size: 12px;
+        }
+
+        .sectionTitle {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .sectionTitle h2 {
+            margin: 0;
+        }
+
+        /* student header layout */
+        .studentHeader {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 16px;
+            align-items: center;
+        }
+
+        @media (max-width: 800px) {
+            .studentHeader {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .cardHeadRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .tinyBtn {
+            padding: 0.35rem 0.55rem;
+            border-radius: 8px;
+            font-size: 12px;
         }
     </style>
 </head>
@@ -437,21 +527,65 @@
     <header id="main-header" style="display:none;">
         <div class="header-brand">
             <div class="logo-3d"></div>
-            <h2 class="glow-text" style="font-size: 1.2rem; margin:0;">Antigravity School</h2>
+            <div style="display:flex; flex-direction:column;">
+                <h2 class="glow-text" style="font-size: 1.2rem; margin:0;">Antigravity School</h2>
+                <div class="muted" id="crumb" style="font-size:12px;">Inicio</div>
+            </div>
         </div>
-        <div style="display:flex; gap: 1rem; align-items:center;">
-            <span id="user-display" style="color: var(--text-main); font-weight: bold;"></span>
-            <button onclick="goHome()" id="btn-home">Volver a inicio</button>
-            <button onclick="logout()" class="danger">Cerrar Sesión</button>
+
+        <div class="header-right">
+            <div class="userChip">
+                <div class="iconBox" style="width:42px;height:42px;border-radius:12px;">
+                    <!-- icon set by JS -->
+                    <svg id="userIcon" class="iconSvg" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm7 9a7 7 0 0 0-14 0" stroke="rgba(102,252,241,.9)" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div>
+                    <div class="userName" id="user-display"></div>
+                    <div class="userRole" id="user-role-display">—</div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <button onclick="goHome()" id="btn-home">Volver a inicio</button>
+                <button onclick="logout()" class="danger">Cerrar Sesión</button>
+            </div>
         </div>
     </header>
 
     <!-- LOGIN PAGE -->
     <div id="login-view" class="view active">
         <div class="carbon-card">
-            <div class="logo-3d" style="width:60px; height:60px; margin: 0 auto 1rem;"></div>
+            <div style="display:flex; justify-content:center; gap:14px; margin-bottom: 14px;">
+                <div class="iconBox" title="Profesor">
+                    <!-- Teacher SVG -->
+                    <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                        <path d="M4 7l8-4 8 4-8 4-8-4Z" stroke="rgba(102,252,241,.95)" stroke-width="1.8" stroke-linejoin="round" />
+                        <path d="M6 10v6c0 2 3 4 6 4s6-2 6-4v-6" stroke="rgba(102,252,241,.85)" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M20 9v6" stroke="rgba(255,255,255,.55)" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="iconBox" title="Alumno">
+                    <!-- Student SVG -->
+                    <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(255,193,7,.95)" stroke-width="1.8" />
+                        <path d="M4 21a8 8 0 0 1 16 0" stroke="rgba(255,193,7,.75)" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="iconBox" title="Horario">
+                    <!-- Schedule SVG -->
+                    <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                        <path d="M7 3v3M17 3v3" stroke="rgba(255,255,255,.65)" stroke-width="1.8" stroke-linecap="round"/>
+                        <path d="M5 6h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="rgba(102,252,241,.85)" stroke-width="1.8"/>
+                        <path d="M7 11h4M7 15h6" stroke="rgba(102,252,241,.7)" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+
             <h1 class="glow-text">Acceso Portal</h1>
             <p>Introduce tus credenciales (profesor1/pass | alumno1/pass)</p>
+
             <div class="form-group" style="text-align:left;">
                 <label>Usuario</label>
                 <input type="text" id="login-user" placeholder="Ej: profesor1">
@@ -460,15 +594,30 @@
                 <label>Contraseña</label>
                 <input type="password" id="login-pass" placeholder="Ej: pass">
             </div>
+
             <p id="login-error" style="color:var(--danger); display:none;"></p>
             <button onclick="login()" style="width:100%; padding:0.8rem; font-size:1.1rem;">Entrar</button>
+
+            <div style="margin-top:14px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                <span class="role-badge"><span class="dot teacher"></span>Profesor edita</span>
+                <span class="role-badge"><span class="dot student"></span>Alumno solo ve</span>
+            </div>
         </div>
     </div>
 
     <!-- TEACHER DASHBOARD -->
     <div id="teacher-view" class="view">
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
-            <h2>Panel de Profesor</h2>
+        <div class="sectionTitle">
+            <div class="iconBox" style="width:46px;height:46px;">
+                <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                    <path d="M4 7l8-4 8 4-8 4-8-4Z" stroke="rgba(102,252,241,.95)" stroke-width="1.8" stroke-linejoin="round" />
+                    <path d="M6 10v6c0 2 3 4 6 4s6-2 6-4v-6" stroke="rgba(102,252,241,.85)" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div>
+                <h2 style="margin:0;">Panel de Profesor</h2>
+                <div class="muted">Selecciona un alumno para ver/editar horario, notas y asistencias.</div>
+            </div>
         </div>
 
         <div class="grid-cards" id="students-list">
@@ -478,24 +627,44 @@
 
     <!-- STUDENT DASHBOARD (Also used for Teacher viewing Student details) -->
     <div id="student-view" class="view">
-        <button id="back-to-teacher" onclick="goHome()" style="margin-bottom:1rem; display:none;">&larr; Volver a
-            Alumnos</button>
+        <button id="back-to-teacher" onclick="goHome()" class="ghost" style="margin-bottom:1rem; display:none;">&larr; Volver a alumnos</button>
 
-        <div class="carbon-card" style="display:flex; align-items:center; gap: 2rem;">
-            <div id="average-display" class="grade-avatar">
-                <span class="grade-val" id="student-avg-val">--</span>
-            </div>
-            <div>
-                <h1 class="glow-text" id="student-name-title">Nombre Alumno</h1>
-                <p style="color:var(--text-main);">Media de Curso</p>
+        <div class="carbon-card">
+            <div class="studentHeader">
+                <div class="iconBox" style="width:64px;height:64px;border-radius:16px;">
+                    <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(255,193,7,.95)" stroke-width="1.8" />
+                        <path d="M4 21a8 8 0 0 1 16 0" stroke="rgba(255,193,7,.75)" stroke-width="1.8" stroke-linecap="round"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h1 class="glow-text" id="student-name-title" style="margin-bottom:6px;">Nombre Alumno</h1>
+                    <div class="role-badge"><span class="dot student"></span>Expediente del alumno</div>
+                </div>
+
+                <div style="justify-self:end;">
+                    <div id="average-display" class="grade-avatar" style="margin:0;">
+                        <span class="grade-val" id="student-avg-val">--</span>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="grid-cards">
             <!-- Schedule -->
             <div class="carbon-card" style="grid-column: 1 / -1;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3>Horarios</h3>
+                <div class="cardHeadRow">
+                    <div class="sectionTitle" style="margin:0;">
+                        <div class="iconBox" style="width:42px;height:42px;">
+                            <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                                <path d="M7 3v3M17 3v3" stroke="rgba(255,255,255,.65)" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M5 6h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z" stroke="rgba(102,252,241,.85)" stroke-width="1.8"/>
+                                <path d="M7 11h4M7 15h6" stroke="rgba(102,252,241,.7)" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3 style="margin:0;">Horarios</h3>
+                    </div>
                     <button class="teacher-only" onclick="openModal('schedule')">Añadir Horario</button>
                 </div>
                 <div style="overflow-x:auto;">
@@ -516,8 +685,8 @@
 
             <!-- Grades -->
             <div class="carbon-card">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3>Notas</h3>
+                <div class="cardHeadRow">
+                    <h3 style="margin:0;">Notas</h3>
                     <button class="teacher-only" onclick="openModal('grade')">Añadir Nota</button>
                 </div>
                 <div style="overflow-x:auto;">
@@ -537,8 +706,8 @@
 
             <!-- Attendances -->
             <div class="carbon-card">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <h3>Asistencias</h3>
+                <div class="cardHeadRow">
+                    <h3 style="margin:0;">Asistencias</h3>
                     <button class="teacher-only" onclick="openModal('attendance')">Añadir Falta</button>
                 </div>
                 <div style="overflow-x:auto;">
@@ -571,7 +740,7 @@
     </div>
 
     <script>
-        // --- 1. DATOS Y PERSISTENCIA (Prompt 5) ---
+        // --- 1. DATOS Y PERSISTENCIA ---
         const DB_KEY = 'antigravity_db';
 
         function getInitialDB() {
@@ -614,26 +783,44 @@
             localStorage.setItem(DB_KEY, JSON.stringify(getInitialDB()));
         }
 
-        // Generate unique ID
         function generateId() { return '_' + Math.random().toString(36).substr(2, 9); }
 
-
-        // --- STATE MANAGMENT ---
+        // --- STATE ---
         let currentDB = loadDB();
         let currentUser = null;
-        let viewStudentId = null; // Used when teacher is viewing a specific student
+        let viewStudentId = null;
 
-        // Modal State
-        let currentModalContext = null; // 'schedule', 'grade', 'attendance'
+        let currentModalContext = null;
         let currentEditingId = null;
 
-        // --- 2. LOGICA DE ROLES (Prompt 3) ---
+        // --- Icons in header depending on role ---
+        function setHeaderRoleIcon(role) {
+            const userIcon = document.getElementById('userIcon');
+            if (!userIcon) return;
+
+            if (role === 'teacher') {
+                userIcon.innerHTML = `
+                    <path d="M4 7l8-4 8 4-8 4-8-4Z" stroke="rgba(102,252,241,.95)" stroke-width="1.8" stroke-linejoin="round" />
+                    <path d="M6 10v6c0 2 3 4 6 4s6-2 6-4v-6" stroke="rgba(102,252,241,.85)" stroke-width="1.8" stroke-linecap="round"/>
+                `;
+            } else {
+                userIcon.innerHTML = `
+                    <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(255,193,7,.95)" stroke-width="1.8" />
+                    <path d="M4 21a8 8 0 0 1 16 0" stroke="rgba(255,193,7,.75)" stroke-width="1.8" stroke-linecap="round"/>
+                `;
+            }
+        }
+
+        // --- 2. ROLES ---
         function checkSession() {
             const userStr = localStorage.getItem('ag_currentUser');
             if (userStr) {
                 currentUser = JSON.parse(userStr);
                 document.getElementById('main-header').style.display = 'flex';
-                document.getElementById('user-display').innerText = `${currentUser.name} (${currentUser.role})`;
+
+                document.getElementById('user-display').innerText = currentUser.name;
+                document.getElementById('user-role-display').innerText = currentUser.role === 'teacher' ? 'Profesor' : 'Alumno';
+                setHeaderRoleIcon(currentUser.role);
 
                 // Hide/Show teacher elements
                 document.querySelectorAll('.teacher-only').forEach(el => {
@@ -641,10 +828,12 @@
                 });
 
                 if (currentUser.role === 'teacher') {
+                    document.getElementById('crumb').innerText = 'Inicio / Profesor';
                     showView('teacher-view');
                     renderTeacherDashboard();
                 } else {
                     viewStudentId = currentUser.id;
+                    document.getElementById('crumb').innerText = 'Inicio / Alumno';
                     showView('student-view');
                     document.getElementById('back-to-teacher').style.display = 'none';
                     renderStudentDashboard();
@@ -689,10 +878,14 @@
         }
 
         function goHome() {
+            if (!currentUser) return;
             if (currentUser.role === 'teacher') {
+                document.getElementById('crumb').innerText = 'Inicio / Profesor';
                 showView('teacher-view');
                 renderTeacherDashboard();
             } else {
+                viewStudentId = currentUser.id;
+                document.getElementById('crumb').innerText = 'Inicio / Alumno';
                 showView('student-view');
                 renderStudentDashboard();
             }
@@ -703,9 +896,7 @@
             document.getElementById(viewId).classList.add('active');
         }
 
-
-        // --- 3. RENDERIZADO Y CALCULO MEDIA (Prompt 1, 4) ---
-
+        // --- 3. MEDIA + ANIMACION ---
         function computeAverage(studentId) {
             const grades = currentDB.grades.filter(g => g.studentId === studentId);
             if (grades.length === 0) return 0;
@@ -714,17 +905,13 @@
         }
 
         function updateAvatarAnimation(avgStr, avatarEl) {
-            avatarEl.className = 'grade-avatar'; // reset
+            avatarEl.className = 'grade-avatar';
             const avg = parseFloat(avgStr);
             if (avgStr === '--' || isNaN(avg)) return;
 
-            if (avg >= 8.5) {
-                avatarEl.classList.add('anim-excellent');
-            } else if (avg >= 5.0) {
-                avatarEl.classList.add('anim-medium');
-            } else {
-                avatarEl.classList.add('anim-low');
-            }
+            if (avg >= 8.5) avatarEl.classList.add('anim-excellent');
+            else if (avg >= 5.0) avatarEl.classList.add('anim-medium');
+            else avatarEl.classList.add('anim-low');
         }
 
         function renderTeacherDashboard() {
@@ -735,13 +922,10 @@
             students.forEach(std => {
                 const avg = computeAverage(std.id);
                 const card = document.createElement('div');
-                card.className = 'carbon-card';
-                card.style.display = 'flex';
-                card.style.alignItems = 'center';
-                card.style.gap = '1rem';
-                card.style.cursor = 'pointer';
+                card.className = 'carbon-card studentCard';
                 card.onclick = () => {
                     viewStudentId = std.id;
+                    document.getElementById('crumb').innerText = 'Inicio / Profesor / Alumno';
                     showView('student-view');
                     document.getElementById('back-to-teacher').style.display = 'inline-block';
                     renderStudentDashboard();
@@ -753,12 +937,21 @@
                 else animClass = 'anim-low';
 
                 card.innerHTML = `
-                    <div class="grade-avatar ${animClass}" style="width:60px; height:60px; margin:0; font-size:1.2rem;">
-                        <span class="grade-val">${avg > 0 ? avg : '-'}</span>
+                    <div class="iconBox" title="Alumno">
+                        <svg class="iconSvg" viewBox="0 0 24 24" fill="none">
+                            <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" stroke="rgba(255,193,7,.95)" stroke-width="1.8" />
+                            <path d="M4 21a8 8 0 0 1 16 0" stroke="rgba(255,193,7,.75)" stroke-width="1.8" stroke-linecap="round"/>
+                        </svg>
                     </div>
-                    <div>
-                        <h3 class="glow-text" style="font-size:1.2rem; margin-bottom:0.2rem;">${std.name}</h3>
-                        <div style="font-size:0.8rem; color:var(--text-main);">Ver expediente</div>
+                    <div class="studentMeta" style="flex:1;">
+                        <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                            <h3 class="glow-text" style="font-size:1.1rem; margin:0;">${std.name}</h3>
+                            <span class="role-badge"><span class="dot student"></span>Alumno</span>
+                        </div>
+                        <div class="muted">Abrir expediente (horarios, notas, asistencias)</div>
+                    </div>
+                    <div class="grade-avatar ${animClass}" style="width:72px; height:72px; margin:0; font-size:1.25rem;">
+                        <span class="grade-val">${avg > 0 ? avg : '-'}</span>
                     </div>
                 `;
                 container.appendChild(card);
@@ -773,10 +966,8 @@
             const avg = computeAverage(viewStudentId);
             const displayVal = avg > 0 ? avg : '--';
             document.getElementById('student-avg-val').innerText = displayVal;
-
             updateAvatarAnimation(displayVal, document.getElementById('average-display'));
 
-            // Render Tables
             const schedules = currentDB.schedules.filter(s => s.studentId === viewStudentId);
             const grades = currentDB.grades.filter(g => g.studentId === viewStudentId);
             const attendances = currentDB.attendances.filter(a => a.studentId === viewStudentId);
@@ -784,28 +975,30 @@
             populateTable('schedule-table', schedules, (sch) => `
                 <td>${sch.day}</td><td>${sch.time}</td><td>${sch.subject}</td><td>${sch.room}</td>
                 <td class="teacher-only">
-                    <button style="padding:0.3rem;" onclick="editItem('schedule', '${sch.id}')">✏️</button>
-                    <button style="padding:0.3rem;" class="danger" onclick="delItem('schedule', '${sch.id}')">🗑️</button>
+                    <button class="tinyBtn" onclick="editItem('schedule', '${sch.id}')">✏️</button>
+                    <button class="tinyBtn danger" onclick="delItem('schedule', '${sch.id}')">🗑️</button>
                 </td>
             `);
 
             populateTable('grades-table', grades, (g) => `
-                <td>${g.subject}</td><td style="font-weight:bold; color:${g.score >= 5 ? 'var(--success)' : 'var(--danger)'};">${g.score}</td><td>${g.date}</td>
+                <td>${g.subject}</td>
+                <td style="font-weight:bold; color:${g.score >= 5 ? 'var(--success)' : 'var(--danger)'};">${g.score}</td>
+                <td>${g.date}</td>
                 <td class="teacher-only">
-                    <button style="padding:0.3rem;" onclick="editItem('grade', '${g.id}')">✏️</button>
-                    <button style="padding:0.3rem;" class="danger" onclick="delItem('grade', '${g.id}')">🗑️</button>
+                    <button class="tinyBtn" onclick="editItem('grade', '${g.id}')">✏️</button>
+                    <button class="tinyBtn danger" onclick="delItem('grade', '${g.id}')">🗑️</button>
                 </td>
             `);
 
             populateTable('attendances-table', attendances, (a) => `
                 <td>${a.date}</td><td>${a.status}</td><td>${a.comment}</td>
                 <td class="teacher-only">
-                    <button style="padding:0.3rem;" onclick="editItem('attendance', '${a.id}')">✏️</button>
-                    <button style="padding:0.3rem;" class="danger" onclick="delItem('attendance', '${a.id}')">🗑️</button>
+                    <button class="tinyBtn" onclick="editItem('attendance', '${a.id}')">✏️</button>
+                    <button class="tinyBtn danger" onclick="delItem('attendance', '${a.id}')">🗑️</button>
                 </td>
             `);
 
-            // Apply visibility again just in case
+            // Re-apply teacher-only visibility
             document.querySelectorAll('.teacher-only').forEach(el => {
                 el.style.display = currentUser.role === 'teacher' ? '' : 'none';
             });
@@ -826,9 +1019,7 @@
             });
         }
 
-
-        // --- 4. CRUD TABLES FOR TEACHER (Prompt 6) ---
-
+        // --- 4. CRUD (Teacher) ---
         function openModal(type, id = null) {
             if (!requireRole('teacher')) return;
             currentModalContext = type;
@@ -853,7 +1044,7 @@
             } else if (type === 'grade') {
                 body.innerHTML = `
                     <div class="form-group"><label>Asignatura</label><input type="text" id="m-subj" value="${item.subject || ''}"></div>
-                    <div class="form-group"><label>Nota (0-10)</label><input type="number" step="0.1" min="0" max="10" id="m-score" value="${item.score || ''}"></div>
+                    <div class="form-group"><label>Nota (0-10)</label><input type="number" step="0.1" min="0" max="10" id="m-score" value="${item.score ?? ''}"></div>
                     <div class="form-group"><label>Fecha</label><input type="date" id="m-date" value="${item.date || ''}"></div>
                 `;
             } else if (type === 'attendance') {
@@ -907,18 +1098,14 @@
                 newItem.comment = document.getElementById('m-comment').value;
             }
 
-            if (!currentEditingId) {
-                targetArray.push(newItem);
-            }
+            if (!currentEditingId) targetArray.push(newItem);
 
             saveDB(currentDB);
             closeModal();
-            renderStudentDashboard(); // Recalcula media y refresca tablas
+            renderStudentDashboard();
         }
 
-        function editItem(type, id) {
-            openModal(type, id);
-        }
+        function editItem(type, id) { openModal(type, id); }
 
         function delItem(type, id) {
             if (!requireRole('teacher')) return;
@@ -933,9 +1120,8 @@
             }
         }
 
-        // Init App
+        // Init
         checkSession();
-
     </script>
 </body>
 
