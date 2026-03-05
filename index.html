@@ -1,100 +1,942 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carbon Fiber Edu - Portal Educativo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <title>Antigravity School - Premium Portal</title>
+    <style>
+        :root {
+            --bg-color: #0b0c10;
+            --surface: #1f2833;
+            --primary: #66fcf1;
+            --primary-dark: #45a29e;
+            --text-main: #c5c6c7;
+            --text-light: #ffffff;
+            --danger: #ff4b4b;
+            --danger-dark: #b33a3a;
+            --success: #4caf50;
+            --warning: #ffc107;
+
+            --carbon-base: #111;
+            --carbon-hl: #222;
+        }
+
+        /* Carbon Fiber Pattern */
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, var(--carbon-base) 25%, transparent 25%, transparent 75%, var(--carbon-base) 75%, var(--carbon-base)),
+                linear-gradient(45deg, var(--carbon-base) 25%, transparent 25%, transparent 75%, var(--carbon-base) 75%, var(--carbon-base));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* 3D Premium Carbon Card */
+        .carbon-card {
+            background: linear-gradient(135deg, rgba(31, 40, 51, 0.9) 0%, rgba(11, 12, 16, 0.95) 100%);
+            border: 1px solid rgba(102, 252, 241, 0.2);
+            border-radius: 16px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.8),
+                inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .carbon-card:hover {
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.9),
+                0 0 15px rgba(102, 252, 241, 0.3),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--text-light);
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .glow-text {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5), 0 0 20px rgba(102, 252, 241, 0.3);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeIn 0.4s ease forwards;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Navigation */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(11, 12, 16, 0.9);
+            border-bottom: 1px solid rgba(102, 252, 241, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-3d {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle at 30% 30%, var(--primary), var(--primary-dark));
+            border-radius: 8px;
+            box-shadow:
+                0 5px 10px rgba(0, 0, 0, 0.5),
+                inset 0 2px 2px rgba(255, 255, 255, 0.4),
+                inset 0 -2px 5px rgba(0, 0, 0, 0.5);
+            transform: perspective(100px) rotateY(15deg);
+        }
+
+        /* Buttons */
+        button {
+            background: linear-gradient(180deg, var(--surface), #111);
+            color: var(--primary);
+            border: 1px solid rgba(102, 252, 241, 0.5);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(180deg, #2a3543, #151a21);
+            color: #fff;
+            box-shadow: 0 0 10px rgba(102, 252, 241, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        button.danger {
+            color: var(--danger);
+            border-color: rgba(255, 75, 75, 0.5);
+        }
+
+        button.danger:hover {
+            color: #fff;
+            box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            font-size: 0.9rem;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(102, 252, 241, 0.3);
+            border-radius: 6px;
+            color: #fff;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 8px rgba(102, 252, 241, 0.3);
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.6);
+            color: var(--primary);
+            font-weight: 600;
+            border-bottom: 2px solid rgba(102, 252, 241, 0.3);
+        }
+
+        tr:hover td {
+            background: rgba(102, 252, 241, 0.05);
+        }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        /* Animations based on Grades */
+        .grade-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 1rem;
+            background: linear-gradient(145deg, #1f2833, #0b0c10);
+            box-shadow: 5px 5px 10px #040506, -5px -5px 10px #12131a;
+            font-size: 2.5rem;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .grade-val {
+            z-index: 2;
+        }
+
+        /* Excellent (>= 8.5) */
+        .anim-excellent {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            border: 2px solid var(--primary);
+            animation: excellentGlow 2s infinite alternate, excellentPop 3s infinite ease-in-out;
+            position: relative;
+        }
+
+        .anim-excellent::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(102, 252, 241, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            animation: particles 1.5s infinite linear;
+        }
+
+        /* Medium (5 - 8.49) */
+        .anim-medium {
+            color: var(--warning);
+            border: 2px solid var(--warning);
+            animation: floatSoft 4s infinite ease-in-out;
+        }
+
+        /* Low (< 5) */
+        .anim-low {
+            color: var(--danger);
+            border: 2px solid var(--danger);
+            animation: trembleRed 0.5s infinite;
+        }
+
+        @keyframes excellentGlow {
+            0% {
+                box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+            }
+
+            100% {
+                box-shadow: 0 0 30px rgba(102, 252, 241, 0.9), inset 0 0 15px rgba(102, 252, 241, 0.5);
+            }
+        }
+
+        @keyframes excellentPop {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            90% {
+                transform: scale(1);
+            }
+
+            95% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes particles {
+            0% {
+                transform: rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatSoft {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                box-shadow: 0 10px 15px rgba(255, 193, 7, 0.2);
+            }
+
+            50% {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 25px rgba(255, 193, 7, 0.4);
+            }
+        }
+
+        @keyframes trembleRed {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+                box-shadow: 0 0 10px rgba(255, 75, 75, 0.5);
+            }
+
+            20% {
+                transform: translate(-1px, 1px) rotate(-1deg);
+            }
+
+            40% {
+                transform: translate(-1px, -1px) rotate(1deg);
+            }
+
+            60% {
+                transform: translate(1px, 1px) rotate(0deg);
+            }
+
+            80% {
+                transform: translate(1px, -1px) rotate(1deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+                box-shadow: 0 0 20px rgba(255, 75, 75, 0.8);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .anim-excellent,
+            .anim-medium,
+            .anim-low,
+            .view,
+            .modal-overlay.active {
+                animation: none !important;
+                transform: none !important;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Layout Grids */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Login specifically */
+        #login-view .carbon-card {
+            max-width: 400px;
+            margin: 10vh auto;
+            text-align: center;
+        }
+
+        .avatar-3d {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--surface), #000);
+            border: 2px solid rgba(102, 252, 241, 0.3);
+            box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.2), 0 5px 15px rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+    </style>
 </head>
+
 <body>
 
-    <!-- Main Container -->
-    <div id="app">
-        <!-- Login View -->
-        <div id="login-view" class="view active">
-            <div class="glass-card login-card">
-                <h1 class="glow-text">Inicia Sesión</h1>
-                <p>EduPortal Premium</p>
-                <div class="form-group">
-                    <label for="username">Usuario (admin / alumno)</label>
-                    <input type="text" id="username" placeholder="Tu usuario">
-                </div>
-                <div class="form-group">
-                    <label for="password">Contraseña (admin / alumno)</label>
-                    <input type="password" id="password" placeholder="Tu contraseña">
-                </div>
-                <button id="login-btn" class="primary-btn">Acceder</button>
-            </div>
+    <header id="main-header" style="display:none;">
+        <div class="header-brand">
+            <div class="logo-3d"></div>
+            <h2 class="glow-text" style="font-size: 1.2rem; margin:0;">Antigravity School</h2>
         </div>
+        <div style="display:flex; gap: 1rem; align-items:center;">
+            <span id="user-display" style="color: var(--text-main); font-weight: bold;"></span>
+            <button onclick="goHome()" id="btn-home">Volver a inicio</button>
+            <button onclick="logout()" class="danger">Cerrar Sesión</button>
+        </div>
+    </header>
 
-        <!-- Dashboard View -->
-        <div id="dashboard-view" class="view hidden">
-            <header class="glass-header">
-                <div class="logo">
-                    <h2>EduPortal <span class="accent">3D</span></h2>
-                </div>
-                <div class="user-info">
-                    <span id="current-user-name"></span>
-                    <button id="logout-btn" class="secondary-btn">Cerrar Sesión / Volver</button>
-                </div>
-            </header>
-
-            <main class="dashboard-content">
-                <!-- Navigation Tabs -->
-                <nav class="tabs glass-tabs">
-                    <button class="tab-btn active" data-target="schedules-section">
-                        <img src="assets/schedule.png" alt="Horarios" class="tab-icon">
-                        Horarios
-                    </button>
-                    <button class="tab-btn" data-target="grades-section">
-                        <img src="assets/students.png" alt="Notas" class="tab-icon">
-                        Notas y Asistencias
-                    </button>
-                    <!-- Teachers only tab -->
-                    <button class="tab-btn hidden teacher-only" data-target="students-list-section">
-                        <img src="assets/teachers.png" alt="Gestión" class="tab-icon">
-                        Gestión de Alumnos
-                    </button>
-                </nav>
-
-                <!-- Sections -->
-                <!-- Schedules -->
-                <section id="schedules-section" class="tab-content active">
-                    <div class="glass-card full-width">
-                        <h3>Horarios de Clase</h3>
-                        <div id="schedule-container">
-                            <!-- Dynamic Content -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Grades & Attendances (For students mostly, or view mode) -->
-                <section id="grades-section" class="tab-content hidden">
-                    <div class="glass-card full-width">
-                        <h3>Mis Notas y Asistencia</h3>
-                        <div id="my-grades-container" class="grades-grid">
-                            <!-- Dynamic Content -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Management (Teacher only) -->
-                <section id="students-list-section" class="tab-content hidden teacher-only">
-                    <div class="glass-card full-width">
-                        <h3>Gestión de Alumnado</h3>
-                        <div id="management-container">
-                            <!-- Dynamic Content -->
-                        </div>
-                    </div>
-                </section>
-
-            </main>
+    <!-- LOGIN PAGE -->
+    <div id="login-view" class="view active">
+        <div class="carbon-card">
+            <div class="logo-3d" style="width:60px; height:60px; margin: 0 auto 1rem;"></div>
+            <h1 class="glow-text">Acceso Portal</h1>
+            <p>Introduce tus credenciales (profesor1/pass | alumno1/pass)</p>
+            <div class="form-group" style="text-align:left;">
+                <label>Usuario</label>
+                <input type="text" id="login-user" placeholder="Ej: profesor1">
+            </div>
+            <div class="form-group" style="text-align:left;">
+                <label>Contraseña</label>
+                <input type="password" id="login-pass" placeholder="Ej: pass">
+            </div>
+            <p id="login-error" style="color:var(--danger); display:none;"></p>
+            <button onclick="login()" style="width:100%; padding:0.8rem; font-size:1.1rem;">Entrar</button>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="app.js"></script>
-</body>
-</html>
+    <!-- TEACHER DASHBOARD -->
+    <div id="teacher-view" class="view">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 2rem;">
+            <h2>Panel de Profesor</h2>
+        </div>
 
+        <div class="grid-cards" id="students-list">
+            <!-- Rendered via JS -->
+        </div>
+    </div>
+
+    <!-- STUDENT DASHBOARD (Also used for Teacher viewing Student details) -->
+    <div id="student-view" class="view">
+        <button id="back-to-teacher" onclick="goHome()" style="margin-bottom:1rem; display:none;">&larr; Volver a
+            Alumnos</button>
+
+        <div class="carbon-card" style="display:flex; align-items:center; gap: 2rem;">
+            <div id="average-display" class="grade-avatar">
+                <span class="grade-val" id="student-avg-val">--</span>
+            </div>
+            <div>
+                <h1 class="glow-text" id="student-name-title">Nombre Alumno</h1>
+                <p style="color:var(--text-main);">Media de Curso</p>
+            </div>
+        </div>
+
+        <div class="grid-cards">
+            <!-- Schedule -->
+            <div class="carbon-card" style="grid-column: 1 / -1;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Horarios</h3>
+                    <button class="teacher-only" onclick="openModal('schedule')">Añadir Horario</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table id="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>Día</th>
+                                <th>Hora</th>
+                                <th>Asignatura</th>
+                                <th>Aula</th>
+                                <th class="teacher-only">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Grades -->
+            <div class="carbon-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Notas</h3>
+                    <button class="teacher-only" onclick="openModal('grade')">Añadir Nota</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table id="grades-table">
+                        <thead>
+                            <tr>
+                                <th>Asignatura</th>
+                                <th>Nota</th>
+                                <th>Fecha</th>
+                                <th class="teacher-only">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Attendances -->
+            <div class="carbon-card">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <h3>Asistencias</h3>
+                    <button class="teacher-only" onclick="openModal('attendance')">Añadir Falta</button>
+                </div>
+                <div style="overflow-x:auto;">
+                    <table id="attendances-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Comentario</th>
+                                <th class="teacher-only">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALS (For CRUD operations, Teacher ONLY) -->
+    <div id="crud-modal" class="modal-overlay">
+        <div class="carbon-card" style="width: 100%; max-width: 500px;">
+            <h2 id="modal-title">Añadir Registro</h2>
+            <div id="modal-body"></div>
+            <div style="display:flex; gap: 1rem; justify-content:flex-end; margin-top: 1.5rem;">
+                <button class="danger" onclick="closeModal()">Cancelar</button>
+                <button onclick="saveModalData()">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. DATOS Y PERSISTENCIA (Prompt 5) ---
+        const DB_KEY = 'antigravity_db';
+
+        function getInitialDB() {
+            return {
+                users: [
+                    { id: 't1', user: 'profesor1', pass: 'pass', role: 'teacher', name: 'Profesor X' },
+                    { id: 't2', user: 'profesor2', pass: 'pass', role: 'teacher', name: 'Profesora Y' },
+                    { id: 's1', user: 'alumno1', pass: 'pass', role: 'student', name: 'Peter Parker' },
+                    { id: 's2', user: 'alumno2', pass: 'pass', role: 'student', name: 'Gwen Stacy' }
+                ],
+                schedules: [
+                    { id: 'sch1', studentId: 's1', day: 'Lunes', time: '08:00', subject: 'Matemáticas 3D', room: 'Laboratorio A' },
+                    { id: 'sch2', studentId: 's2', day: 'Lunes', time: '08:00', subject: 'Física Avanzada', room: 'Aula 204' }
+                ],
+                grades: [
+                    { id: 'g1', studentId: 's1', subject: 'Matemáticas 3D', score: 9.5, date: '2026-03-01' },
+                    { id: 'g2', studentId: 's1', subject: 'Historia Espacial', score: 4.5, date: '2026-03-02' },
+                    { id: 'g3', studentId: 's2', subject: 'Física Avanzada', score: 7.2, date: '2026-03-01' }
+                ],
+                attendances: [
+                    { id: 'a1', studentId: 's1', date: '2026-03-01', status: 'Tarde', comment: 'Tráfico en la estratosfera' }
+                ]
+            };
+        }
+
+        function loadDB() {
+            const data = localStorage.getItem(DB_KEY);
+            if (!data) {
+                seedDemo();
+                return getInitialDB();
+            }
+            return JSON.parse(data);
+        }
+
+        function saveDB(db) {
+            localStorage.setItem(DB_KEY, JSON.stringify(db));
+        }
+
+        function seedDemo() {
+            localStorage.setItem(DB_KEY, JSON.stringify(getInitialDB()));
+        }
+
+        // Generate unique ID
+        function generateId() { return '_' + Math.random().toString(36).substr(2, 9); }
+
+
+        // --- STATE MANAGMENT ---
+        let currentDB = loadDB();
+        let currentUser = null;
+        let viewStudentId = null; // Used when teacher is viewing a specific student
+
+        // Modal State
+        let currentModalContext = null; // 'schedule', 'grade', 'attendance'
+        let currentEditingId = null;
+
+        // --- 2. LOGICA DE ROLES (Prompt 3) ---
+        function checkSession() {
+            const userStr = localStorage.getItem('ag_currentUser');
+            if (userStr) {
+                currentUser = JSON.parse(userStr);
+                document.getElementById('main-header').style.display = 'flex';
+                document.getElementById('user-display').innerText = `${currentUser.name} (${currentUser.role})`;
+
+                // Hide/Show teacher elements
+                document.querySelectorAll('.teacher-only').forEach(el => {
+                    el.style.display = currentUser.role === 'teacher' ? '' : 'none';
+                });
+
+                if (currentUser.role === 'teacher') {
+                    showView('teacher-view');
+                    renderTeacherDashboard();
+                } else {
+                    viewStudentId = currentUser.id;
+                    showView('student-view');
+                    document.getElementById('back-to-teacher').style.display = 'none';
+                    renderStudentDashboard();
+                }
+            } else {
+                document.getElementById('main-header').style.display = 'none';
+                showView('login-view');
+            }
+        }
+
+        function requireRole(role) {
+            if (!currentUser || currentUser.role !== role) {
+                alert('Acceso no autorizado.');
+                return false;
+            }
+            return true;
+        }
+
+        function login() {
+            const userIn = document.getElementById('login-user').value.trim();
+            const passIn = document.getElementById('login-pass').value.trim();
+            const err = document.getElementById('login-error');
+
+            const foundUser = currentDB.users.find(u => u.user === userIn && u.pass === passIn);
+            if (foundUser) {
+                err.style.display = 'none';
+                localStorage.setItem('ag_currentUser', JSON.stringify(foundUser));
+                checkSession();
+            } else {
+                err.innerText = 'Usuario o contraseña incorrectos.';
+                err.style.display = 'block';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('ag_currentUser');
+            currentUser = null;
+            viewStudentId = null;
+            document.getElementById('login-user').value = '';
+            document.getElementById('login-pass').value = '';
+            checkSession();
+        }
+
+        function goHome() {
+            if (currentUser.role === 'teacher') {
+                showView('teacher-view');
+                renderTeacherDashboard();
+            } else {
+                showView('student-view');
+                renderStudentDashboard();
+            }
+        }
+
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+
+        // --- 3. RENDERIZADO Y CALCULO MEDIA (Prompt 1, 4) ---
+
+        function computeAverage(studentId) {
+            const grades = currentDB.grades.filter(g => g.studentId === studentId);
+            if (grades.length === 0) return 0;
+            const sum = grades.reduce((acc, g) => acc + parseFloat(g.score), 0);
+            return (sum / grades.length).toFixed(1);
+        }
+
+        function updateAvatarAnimation(avgStr, avatarEl) {
+            avatarEl.className = 'grade-avatar'; // reset
+            const avg = parseFloat(avgStr);
+            if (avgStr === '--' || isNaN(avg)) return;
+
+            if (avg >= 8.5) {
+                avatarEl.classList.add('anim-excellent');
+            } else if (avg >= 5.0) {
+                avatarEl.classList.add('anim-medium');
+            } else {
+                avatarEl.classList.add('anim-low');
+            }
+        }
+
+        function renderTeacherDashboard() {
+            const students = currentDB.users.filter(u => u.role === 'student');
+            const container = document.getElementById('students-list');
+            container.innerHTML = '';
+
+            students.forEach(std => {
+                const avg = computeAverage(std.id);
+                const card = document.createElement('div');
+                card.className = 'carbon-card';
+                card.style.display = 'flex';
+                card.style.alignItems = 'center';
+                card.style.gap = '1rem';
+                card.style.cursor = 'pointer';
+                card.onclick = () => {
+                    viewStudentId = std.id;
+                    showView('student-view');
+                    document.getElementById('back-to-teacher').style.display = 'inline-block';
+                    renderStudentDashboard();
+                };
+
+                let animClass = '';
+                if (avg >= 8.5) animClass = 'anim-excellent';
+                else if (avg >= 5) animClass = 'anim-medium';
+                else animClass = 'anim-low';
+
+                card.innerHTML = `
+                    <div class="grade-avatar ${animClass}" style="width:60px; height:60px; margin:0; font-size:1.2rem;">
+                        <span class="grade-val">${avg > 0 ? avg : '-'}</span>
+                    </div>
+                    <div>
+                        <h3 class="glow-text" style="font-size:1.2rem; margin-bottom:0.2rem;">${std.name}</h3>
+                        <div style="font-size:0.8rem; color:var(--text-main);">Ver expediente</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function renderStudentDashboard() {
+            if (!viewStudentId) return;
+            const student = currentDB.users.find(u => u.id === viewStudentId);
+            document.getElementById('student-name-title').innerText = student.name;
+
+            const avg = computeAverage(viewStudentId);
+            const displayVal = avg > 0 ? avg : '--';
+            document.getElementById('student-avg-val').innerText = displayVal;
+
+            updateAvatarAnimation(displayVal, document.getElementById('average-display'));
+
+            // Render Tables
+            const schedules = currentDB.schedules.filter(s => s.studentId === viewStudentId);
+            const grades = currentDB.grades.filter(g => g.studentId === viewStudentId);
+            const attendances = currentDB.attendances.filter(a => a.studentId === viewStudentId);
+
+            populateTable('schedule-table', schedules, (sch) => `
+                <td>${sch.day}</td><td>${sch.time}</td><td>${sch.subject}</td><td>${sch.room}</td>
+                <td class="teacher-only">
+                    <button style="padding:0.3rem;" onclick="editItem('schedule', '${sch.id}')">✏️</button>
+                    <button style="padding:0.3rem;" class="danger" onclick="delItem('schedule', '${sch.id}')">🗑️</button>
+                </td>
+            `);
+
+            populateTable('grades-table', grades, (g) => `
+                <td>${g.subject}</td><td style="font-weight:bold; color:${g.score >= 5 ? 'var(--success)' : 'var(--danger)'};">${g.score}</td><td>${g.date}</td>
+                <td class="teacher-only">
+                    <button style="padding:0.3rem;" onclick="editItem('grade', '${g.id}')">✏️</button>
+                    <button style="padding:0.3rem;" class="danger" onclick="delItem('grade', '${g.id}')">🗑️</button>
+                </td>
+            `);
+
+            populateTable('attendances-table', attendances, (a) => `
+                <td>${a.date}</td><td>${a.status}</td><td>${a.comment}</td>
+                <td class="teacher-only">
+                    <button style="padding:0.3rem;" onclick="editItem('attendance', '${a.id}')">✏️</button>
+                    <button style="padding:0.3rem;" class="danger" onclick="delItem('attendance', '${a.id}')">🗑️</button>
+                </td>
+            `);
+
+            // Apply visibility again just in case
+            document.querySelectorAll('.teacher-only').forEach(el => {
+                el.style.display = currentUser.role === 'teacher' ? '' : 'none';
+            });
+        }
+
+        function populateTable(tableId, dataList, rowHtmlFn) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            tbody.innerHTML = '';
+            if (dataList.length === 0) {
+                const cols = document.querySelector(`#${tableId} thead tr`).children.length;
+                tbody.innerHTML = `<tr><td colspan="${cols}" style="text-align:center;">No hay registros.</td></tr>`;
+                return;
+            }
+            dataList.forEach(item => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = rowHtmlFn(item);
+                tbody.appendChild(tr);
+            });
+        }
+
+
+        // --- 4. CRUD TABLES FOR TEACHER (Prompt 6) ---
+
+        function openModal(type, id = null) {
+            if (!requireRole('teacher')) return;
+            currentModalContext = type;
+            currentEditingId = id;
+
+            const title = document.getElementById('modal-title');
+            const body = document.getElementById('modal-body');
+            title.innerText = (id ? 'Editar ' : 'Añadir ') + (type === 'schedule' ? 'Horario' : type === 'grade' ? 'Nota' : 'Asistencia');
+
+            let item = {};
+            if (id) {
+                item = currentDB[type + 's'].find(x => x.id === id) || {};
+            }
+
+            if (type === 'schedule') {
+                body.innerHTML = `
+                    <div class="form-group"><label>Día</label><input type="text" id="m-day" value="${item.day || ''}"></div>
+                    <div class="form-group"><label>Hora</label><input type="time" id="m-time" value="${item.time || ''}"></div>
+                    <div class="form-group"><label>Asignatura</label><input type="text" id="m-subj" value="${item.subject || ''}"></div>
+                    <div class="form-group"><label>Aula</label><input type="text" id="m-room" value="${item.room || ''}"></div>
+                `;
+            } else if (type === 'grade') {
+                body.innerHTML = `
+                    <div class="form-group"><label>Asignatura</label><input type="text" id="m-subj" value="${item.subject || ''}"></div>
+                    <div class="form-group"><label>Nota (0-10)</label><input type="number" step="0.1" min="0" max="10" id="m-score" value="${item.score || ''}"></div>
+                    <div class="form-group"><label>Fecha</label><input type="date" id="m-date" value="${item.date || ''}"></div>
+                `;
+            } else if (type === 'attendance') {
+                body.innerHTML = `
+                    <div class="form-group"><label>Fecha</label><input type="date" id="m-date" value="${item.date || ''}"></div>
+                    <div class="form-group"><label>Estado</label>
+                        <select id="m-status">
+                            <option value="Presente" ${item.status === 'Presente' ? 'selected' : ''}>Presente</option>
+                            <option value="Ausente" ${item.status === 'Ausente' ? 'selected' : ''}>Ausente</option>
+                            <option value="Tarde" ${item.status === 'Tarde' ? 'selected' : ''}>Tarde</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Comentario</label><input type="text" id="m-comment" value="${item.comment || ''}"></div>
+                `;
+            }
+            document.getElementById('crud-modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('crud-modal').classList.remove('active');
+            currentModalContext = null;
+            currentEditingId = null;
+        }
+
+        function saveModalData() {
+            if (!requireRole('teacher')) return;
+
+            const type = currentModalContext;
+            const targetArray = currentDB[type + 's'];
+
+            let newItem = { studentId: viewStudentId };
+
+            if (currentEditingId) {
+                newItem = targetArray.find(x => x.id === currentEditingId);
+            } else {
+                newItem.id = generateId();
+            }
+
+            if (type === 'schedule') {
+                newItem.day = document.getElementById('m-day').value;
+                newItem.time = document.getElementById('m-time').value;
+                newItem.subject = document.getElementById('m-subj').value;
+                newItem.room = document.getElementById('m-room').value;
+            } else if (type === 'grade') {
+                newItem.subject = document.getElementById('m-subj').value;
+                newItem.score = parseFloat(document.getElementById('m-score').value);
+                newItem.date = document.getElementById('m-date').value;
+            } else if (type === 'attendance') {
+                newItem.date = document.getElementById('m-date').value;
+                newItem.status = document.getElementById('m-status').value;
+                newItem.comment = document.getElementById('m-comment').value;
+            }
+
+            if (!currentEditingId) {
+                targetArray.push(newItem);
+            }
+
+            saveDB(currentDB);
+            closeModal();
+            renderStudentDashboard(); // Recalcula media y refresca tablas
+        }
+
+        function editItem(type, id) {
+            openModal(type, id);
+        }
+
+        function delItem(type, id) {
+            if (!requireRole('teacher')) return;
+            if (confirm('¿Seguro que quieres eliminar este registro?')) {
+                const arr = currentDB[type + 's'];
+                const idx = arr.findIndex(x => x.id === id);
+                if (idx > -1) {
+                    arr.splice(idx, 1);
+                    saveDB(currentDB);
+                    renderStudentDashboard();
+                }
+            }
+        }
+
+        // Init App
+        checkSession();
+
+    </script>
+</body>
+
+</html>
